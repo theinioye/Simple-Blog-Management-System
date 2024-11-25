@@ -4,7 +4,7 @@ import {
   Column,
   Entity,
   ManyToMany,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -21,7 +21,7 @@ export class Author {
   @Column()
   password: string;
 
-  @ManyToOne(() => Post, (post) => post.author)
+  @OneToMany(() => Post, (post) => post.author)
   posts: [];
 
   @ManyToMany(() => Subscriber, (subscriber) => subscriber.authors)

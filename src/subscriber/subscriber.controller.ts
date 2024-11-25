@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  // Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
-import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
+// import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
 
 @Controller('subscriber')
 export class SubscriberController {
@@ -9,7 +17,7 @@ export class SubscriberController {
 
   @Post()
   create(@Body() createSubscriberDto: CreateSubscriberDto) {
-    return this.subscriberService.create(createSubscriberDto);
+    return this.subscriberService.registerNewUser(createSubscriberDto);
   }
 
   @Get()
@@ -22,10 +30,10 @@ export class SubscriberController {
     return this.subscriberService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSubscriberDto: UpdateSubscriberDto) {
-    return this.subscriberService.update(+id, updateSubscriberDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateSubscriberDto: UpdateSubscriberDto) {
+  //   return this.subscriberService.update(+id, updateSubscriberDto);
+  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
