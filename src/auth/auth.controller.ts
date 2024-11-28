@@ -14,6 +14,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './authguard';
+import { signInDto } from './dto/signIn-auth.dto';
+import { Public } from 'src/SkipAuth';
 // import { CreateAuthDto } from './dto/create-auth.dto';
 // import { UpdateAuthDto } from './dto/update-auth.dto';
 // import { SubscriberService } from 'src/subscriber/subscriber.service';
@@ -24,9 +26,10 @@ import { AuthGuard } from './authguard';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async SignIn(@Body() signInDto: Record<string, any>) {
+  async SignIn(@Body() signInDto: signInDto) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
   @UseGuards(AuthGuard)

@@ -19,10 +19,7 @@ export class SubscriberController {
   @Public()
   @Post('create')
   create(@Body() createSubscriberDto: CreateSubscriberDto) {
-    return this.subscriberService.make(
-      createSubscriberDto.username,
-      createSubscriberDto.password,
-    );
+    return this.subscriberService.create(createSubscriberDto);
   }
 
   @Get()
@@ -30,7 +27,6 @@ export class SubscriberController {
     return this.subscriberService.findAll();
   }
 
-  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.subscriberService.findOne(+id);

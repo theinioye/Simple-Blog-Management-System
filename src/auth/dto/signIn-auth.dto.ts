@@ -8,6 +8,5 @@ export class signInDto {
   username: string;
 
   @IsString()
-  @IsStrongPassword()
   password: string;
 }
