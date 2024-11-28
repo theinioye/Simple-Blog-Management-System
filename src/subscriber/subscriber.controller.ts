@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
+import { Public } from 'src/SkipAuth';
 // import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
 
 @Controller('subscriber')

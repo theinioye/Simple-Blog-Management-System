@@ -10,6 +10,7 @@ import {
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { Public } from 'src/SkipAuth';
 
 @Controller('post')
 export class PostController {
@@ -20,11 +21,13 @@ export class PostController {
     return this.postService.create(createPostDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.postService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.postService.findOne(+id);
@@ -35,6 +38,7 @@ export class PostController {
     return this.postService.update(+id, updatePostDto);
   }
 
+  @Public()
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.postService.remove(+id);

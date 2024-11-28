@@ -7,6 +7,7 @@ import { pgconfig } from './dbConfig';
 import { AuthorModule } from './author/author.module';
 import { SubscriberModule } from './subscriber/subscriber.module';
 import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 
 @Module({
   imports: [
@@ -17,6 +18,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}

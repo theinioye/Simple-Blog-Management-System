@@ -4,7 +4,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
-import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
+// import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Subscriber } from './entities/subscriber.entity';
 import { Repository } from 'typeorm';
@@ -38,21 +38,29 @@ export class SubscriberService {
     });
 
     if (!user || user.password !== password) {
+      throw new UnauthorizedException('incorrect credentials');
     }
-    return 'log in successfull';
+    return user;
   }
 
   async findAll() {
     return await this.subscriberRepository.find();
   }
 
+  async findByUsername(username: string) {
+    return this.subscriberRepository.findOne({
+      where: { username },
+    });
+  }
+
+  
   async findOne(id: number) {
     return await this.subscriberRepository.findOneBy({ id });
   }
 
-  update(id: number, updateSubscriberDto: UpdateSubscriberDto) {
-    return `This action updates a #${id} subscriber`;
-  }
+  // update(id: number, updateSubscriberDto: UpdateSubscriberDto) {
+  //   return `This action updates a #${id} subscriber`;
+  // }
 
   async remove(id: number) {
     return await this.subscriberRepository.delete(id);
