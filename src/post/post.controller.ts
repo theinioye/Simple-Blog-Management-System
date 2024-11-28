@@ -16,6 +16,8 @@ import { Public } from 'src/SkipAuth';
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
+
+  @Public()
   @Post()
   create(@Body() createPostDto: CreatePostDto) {
     return this.postService.create(createPostDto);

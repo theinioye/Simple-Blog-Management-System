@@ -5,17 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Subscriber } from 'rxjs';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'src/auth/authguard';
+// import { APP_GUARD } from '@nestjs/core';
+// import { AuthGuard } from 'src/auth/authguard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Subscriber])],
   controllers: [SubscriberController],
-  providers: [
-    SubscriberService,
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [SubscriberService],
   exports: [SubscriberService],
 })
 export class SubscriberModule {}

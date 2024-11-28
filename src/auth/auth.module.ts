@@ -3,16 +3,16 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { Auth } from './entities/auth.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { SubscriberService } from 'src/subscriber/subscriber.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './authguard';
+import { SubscriberModule } from 'src/subscriber/subscriber.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Auth]),
-    SubscriberService,
+    SubscriberModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
@@ -23,7 +23,7 @@ import { AuthGuard } from './authguard';
   controllers: [AuthController],
   providers: [
     AuthService,
-    SubscriberService,
+    SubscriberModule,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,

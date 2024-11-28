@@ -16,9 +16,13 @@ import { Public } from 'src/SkipAuth';
 export class SubscriberController {
   constructor(private readonly subscriberService: SubscriberService) {}
 
-  @Post()
+  @Public()
+  @Post('create')
   create(@Body() createSubscriberDto: CreateSubscriberDto) {
-    return this.subscriberService.registerNewUser(createSubscriberDto);
+    return this.subscriberService.make(
+      createSubscriberDto.username,
+      createSubscriberDto.password,
+    );
   }
 
   @Get()
@@ -26,6 +30,7 @@ export class SubscriberController {
     return this.subscriberService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.subscriberService.findOne(+id);

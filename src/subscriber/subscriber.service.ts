@@ -8,6 +8,7 @@ import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Subscriber } from './entities/subscriber.entity';
 import { Repository } from 'typeorm';
+import { Public } from 'src/SkipAuth';
 
 @Injectable()
 export class SubscriberService {
@@ -18,6 +19,14 @@ export class SubscriberService {
 
   async create(createSubscriberDto: CreateSubscriberDto) {
     return await this.subscriberRepository.save(createSubscriberDto);
+  }
+
+  async make(username: string, password: string): Promise<Subscriber> {
+    const user = new Subscriber();
+    user.username = username;
+    user.password = password;
+
+    return this.subscriberRepository.save(user);
   }
 
   async registerNewUser(createSubscriberDto: CreateSubscriberDto) {
@@ -53,7 +62,7 @@ export class SubscriberService {
     });
   }
 
-  
+  @Public()
   async findOne(id: number) {
     return await this.subscriberRepository.findOneBy({ id });
   }

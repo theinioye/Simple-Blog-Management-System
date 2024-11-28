@@ -8,9 +8,9 @@ export class CreatePostDto {
 
   @IsString()
   @MinLength(5)
-  @MaxLength(10)
+  @MaxLength(100)
   title: string;
 
   @IsBoolean()
-  isMonetized: boolean;
+  readonly isMonetized: boolean;
 }
