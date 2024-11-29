@@ -22,13 +22,13 @@ import { Public } from 'src/SkipAuth';
 // import { Http2ServerRequest } from 'http2';
 // import { signInDto } from './dto/signIn-auth.dto';
 
-@Controller('auth')
+@Controller('login')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Public()
   @HttpCode(HttpStatus.OK)
-  @Post('login')
+  @Post()
   async SignIn(@Body() signInDto: signInDto) {
     return this.authService.signIn(signInDto.username, signInDto.password);
   }

@@ -1,4 +1,4 @@
-import { IsString, IsStrongPassword, MaxLength } from 'class-validator';
+import { IsString, MaxLength } from 'class-validator';
 import { MinLength } from 'class-validator';
 
 export class signInDto {
