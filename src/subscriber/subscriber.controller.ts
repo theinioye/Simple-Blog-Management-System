@@ -19,7 +19,7 @@ export class SubscriberController {
   @Public()
   @Post('create')
   create(@Body() createSubscriberDto: CreateSubscriberDto) {
-    return this.subscriberService.create(createSubscriberDto);
+    return this.subscriberService.registerNewUser(createSubscriberDto);
   }
 
   @Get()

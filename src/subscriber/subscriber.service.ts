@@ -1,7 +1,7 @@
 import {
   ConflictException,
   Injectable,
-  UnauthorizedException,
+  // UnauthorizedException,
 } from '@nestjs/common';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 // import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Subscriber } from './entities/subscriber.entity';
 import { Repository } from 'typeorm';
 import { Public } from 'src/SkipAuth';
+import { hashstring } from './utils';
 
 @Injectable()
 export class SubscriberService {
@@ -21,16 +22,18 @@ export class SubscriberService {
     return await this.subscriberRepository.save(createSubscriberDto);
   }
 
-  async make(username: string, password: string): Promise<Subscriber> {
-    const user = new Subscriber();
-    user.username = username;
-    user.password = password;
+  // async make(username: string, password: string): Promise<Subscriber> {
+  //   const user = new Subscriber();
+  //   user.username = username;
+  //   user.password = password;
 
-    return this.subscriberRepository.save(user);
-  }
+  //   return this.subscriberRepository.save(user);
+  // }
 
-  async registerNewUser(createSubscriberDto: CreateSubscriberDto) {
-    const username = createSubscriberDto.username;
+  async registerNewUser(
+    createSubscriberDto: CreateSubscriberDto,
+  ): Promise<any> {
+    const { username, email, password } = createSubscriberDto;
 
     const existingUser = await this.subscriberRepository.findOne({
       where: { username },
@@ -38,19 +41,28 @@ export class SubscriberService {
     if (existingUser) {
       throw new ConflictException('username already exists');
     }
-    return await this.subscriberRepository.save(createSubscriberDto);
+    const hashedPassword = await hashstring(password);
+
+    const newUser = {
+      username,
+      email,
+      password: hashedPassword,
+    };
+    return await this.subscriberRepository.save(newUser);
   }
 
-  async logIn(username: string, password: string) {
-    const user = await this.subscriberRepository.findOne({
-      where: { username },
-    });
+  // async logIn(username: string, password: string) {
+  //   const user = await this.subscriberRepository.findOne({
+  //     where: { username },
+  //   });
 
-    if (!user || user.password !== password) {
-      throw new UnauthorizedException('incorrect credentials');
-    }
-    return user;
-  }
+  //   const isMatch = await comparehash(password, user.password);
+
+  //   if (!user || !isMatch) {
+  //     throw new UnauthorizedException('incorrect credentials');
+  //   }
+  //   return user;
+  // }
 
   async findAll() {
     return await this.subscriberRepository.find();

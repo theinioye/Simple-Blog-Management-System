@@ -4,7 +4,7 @@ import { MinLength } from 'class-validator';
 export class signInDto {
   @IsString({ message: 'Not a string' })
   @MinLength(5)
-  @MaxLength(10)
+  @MaxLength(20)
   username: string;
 
   @IsString()

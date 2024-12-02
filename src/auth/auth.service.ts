@@ -3,6 +3,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 // import { UpdateAuthDto } from './dto/update-auth.dto'
 import { JwtService } from '@nestjs/jwt';
 import { SubscriberService } from 'src/subscriber/subscriber.service';
+import { comparehash } from 'src/subscriber/utils';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,10 @@ export class AuthService {
     pass: string,
   ): Promise<{ access_token: string }> {
     const user = await this.subscriberservice.findByUsername(username);
-    if (user?.password !== pass) {
+
+    const isMatch = await comparehash(pass, user.password);
+
+    if (!user || !isMatch) {
       throw new UnauthorizedException();
     }
 
