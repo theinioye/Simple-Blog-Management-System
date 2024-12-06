@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  // Patch,
   Param,
   Delete,
   Patch,
@@ -12,6 +11,7 @@ import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { Public } from 'src/SkipAuth';
 import { updateSubscriberDto } from './dto/update-subscriber.dto';
+import { updatePasswordDto } from './dto/update-password.dto';
 
 @Controller('subscriber')
 export class SubscriberController {
@@ -46,9 +46,9 @@ export class SubscriberController {
   @Patch('password/:id')
   updatePassword(
     @Param('id') id: string,
-    @Body() updateSubscriberDto: updateSubscriberDto,
+    @Body() updatePasswordDto: updatePasswordDto,
   ) {
-    return this.subscriberService.updatePassword(+id, updateSubscriberDto);
+    return this.subscriberService.updatePassword(+id, updatePasswordDto);
   }
 
   @Delete(':id')
