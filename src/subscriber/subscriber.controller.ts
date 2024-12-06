@@ -6,11 +6,12 @@ import {
   // Patch,
   Param,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { Public } from 'src/SkipAuth';
-// import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
+import { updateSubscriberDto } from './dto/update-subscriber.dto';
 
 @Controller('subscriber')
 export class SubscriberController {
@@ -32,10 +33,23 @@ export class SubscriberController {
     return this.subscriberService.findOne(+id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateSubscriberDto: UpdateSubscriberDto) {
-  //   return this.subscriberService.update(+id, updateSubscriberDto);
-  // }
+  @Public()
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() updateSubscriberDto: updateSubscriberDto,
+  ) {
+    return this.subscriberService.update(+id, updateSubscriberDto);
+  }
+
+  @Public()
+  @Patch('password/:id')
+  updatePassword(
+    @Param('id') id: string,
+    @Body() updateSubscriberDto: updateSubscriberDto,
+  ) {
+    return this.subscriberService.updatePassword(+id, updateSubscriberDto);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
