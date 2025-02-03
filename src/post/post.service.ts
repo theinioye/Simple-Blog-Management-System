@@ -24,8 +24,11 @@ export class PostService {
     return await this.postRepository.findOneBy({ id });
   }
 
-  async update(id: number, updatePostDto: UpdatePostDto) {
-    return 'Hello from the other side';
+  async update(id: number, UpdatePostDto: UpdatePostDto) {
+    return await this.postRepository.save({
+      id,
+      UpdatePostDto,
+    });
   }
 
   async remove(id: number) {

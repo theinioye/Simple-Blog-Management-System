@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Author } from './entities/author.entity';
 import { Repository } from 'typeorm';
+import { hashstring } from 'src/subscriber/utils';
 
 @Injectable()
 export class AuthorService {
@@ -12,8 +13,23 @@ export class AuthorService {
     private authorRepository: Repository<Author>,
   ) {}
 
-  async create(createAuthorDto: CreateAuthorDto) {
-    return await this.authorRepository.save(createAuthorDto);
+  async create(createAuthorDto: CreateAuthorDto): Promise<any> {
+    const { name, email, password } = createAuthorDto;
+
+    const author = this.authorRepository.findOneBy({ name });
+
+    if (author) {
+      throw new ConflictException('Author name already exists');
+    }
+    const hashedPassword = await hashstring(password);
+
+    const newAuthor = {
+      name,
+      email,
+      hashedPassword,
+    };
+
+    return await this.authorRepository.save(newAuthor);
   }
 
   async findAll() {
@@ -24,8 +40,11 @@ export class AuthorService {
     return await this.authorRepository.findOneBy({ id });
   }
 
-  update(id: number, updateAuthorDto: UpdateAuthorDto) {
-    return `This action updates a #${id} author`;
+  async update(id: number, updateAuthorDto: UpdateAuthorDto) {
+    return await this.authorRepository.save({
+      id,
+      updateAuthorDto,
+    });
   }
 
   async remove(id: number) {
