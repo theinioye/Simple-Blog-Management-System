@@ -1,21 +1,17 @@
 import {
-  Controller,
-  // Get,
-  Post,
   Body,
+  Controller,
   Get,
-  HttpStatus,
   HttpCode,
-  UseGuards,
+  HttpStatus,
+  Post,
   Request,
-  // Patch,
-  // Param,
-  // Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { Public } from 'src/SkipAuth';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './authguard';
 import { signInDto } from './dto/signIn-auth.dto';
-import { Public } from 'src/SkipAuth';
 // import { CreateAuthDto } from './dto/create-auth.dto';
 // import { UpdateAuthDto } from './dto/update-auth.dto';
 // import { SubscriberService } from 'src/subscriber/subscriber.service';
@@ -38,28 +34,3 @@ export class AuthController {
     return req.user;
   }
 }
-
-// @Post()
-// create(@Body() createAuthDto: CreateAuthDto) {
-//   return this.authService.create(createAuthDto);
-// }
-
-// @Get()
-// findAll() {
-//   return this.authService.findAll();
-// }
-
-// @Get(':id')
-// findOne(@Param('id') id: string) {
-//   return this.authService.findOne(+id);
-// }
-
-// @Patch(':id')
-// update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-//   return this.authService.update(+id, updateAuthDto);
-// }
-
-// @Delete(':id')
-// remove(@Param('id') id: string) {
-//   return this.authService.remove(+id);
-//
