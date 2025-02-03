@@ -8,10 +8,12 @@ import { AuthorModule } from './author/author.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthService } from './auth/auth.service';
 import { SubscriberModule } from './subscriber/subscriber.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
     PostModule,
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(pgconfig),
     SubscriberModule,
     PostModule,
